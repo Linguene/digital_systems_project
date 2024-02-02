@@ -1,0 +1,14 @@
+Analysis & Synthesis Status : Successful - Thu Jun 09 17:32:08 2022
+Quartus Prime Version : 20.1.1 Build 720 11/11/2020 SJ Lite Edition
+Revision Name : lab2
+Top-level Entity Name : gcd_asmd
+Family : Cyclone IV E
+Total logic elements : 4,915
+    Total combinational functions : 4,915
+    Dedicated logic registers : 64
+Total registers : 64
+Total pins : 5
+Total virtual pins : 0
+Total memory bits : 0
+Embedded Multiplier 9-bit elements : 1
+Total PLLs : 0

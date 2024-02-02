@@ -1,0 +1,38 @@
+# Reading pref.tcl
+# do lab2_run_msim_rtl_verilog.do
+# if {[file exists rtl_work]} {
+# 	vdel -lib rtl_work -all
+# }
+# vlib rtl_work
+# vmap work rtl_work
+# Model Technology ModelSim - Intel FPGA Edition vmap 2020.1 Lib Mapping Utility 2020.02 Feb 28 2020
+# vmap work rtl_work 
+# Copying C:/intelFPGA/modelsim_ase/win32aloem/../modelsim.ini to modelsim.ini
+# Modifying modelsim.ini
+# 
+# vlog -vlog01compat -work work +incdir+C:/Users/eryko/Desktop/SYCYF/SYCYF_PROJEKT/ETAP5/ProjektEtap5 {C:/Users/eryko/Desktop/SYCYF/SYCYF_PROJEKT/ETAP5/ProjektEtap5/gcd_asmd.v}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 17:33:54 on Jun 09,2022
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+C:/Users/eryko/Desktop/SYCYF/SYCYF_PROJEKT/ETAP5/ProjektEtap5" C:/Users/eryko/Desktop/SYCYF/SYCYF_PROJEKT/ETAP5/ProjektEtap5/gcd_asmd.v 
+# -- Compiling module gcd_asmd
+# 
+# Top level modules:
+# 	gcd_asmd
+# End time: 17:33:54 on Jun 09,2022, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# 
+vsim work.gcd_asmd
+# vsim work.gcd_asmd 
+# Start time: 17:34:10 on Jun 09,2022
+# Loading work.gcd_asmd
+do test_sycy_lab2.do
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: eryko  Hostname: LEGIONY540  ProcessID: 17052
+#           Attempting to use alternate WLF file "./wlftzgesvm".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftzgesvm
+# GetModuleFileName: Nie mo¿na odnaleŸæ okreœlonego modu³u.
+# 
+# 
+# End time: 17:37:27 on Jun 09,2022, Elapsed time: 0:03:17
+# Errors: 0, Warnings: 2

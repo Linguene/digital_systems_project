@@ -1,0 +1,108 @@
+module gcd_asmd
+#(
+	parameter N = 32
+)
+(
+	input  	   	  	 rst,
+	input  			  	 clk,
+	input  			  	 ena,
+	input  			  	 start,
+	input  	  [N-1:0] dataA,
+	input  	  [N-1:0] dataB,
+	output reg [N-1:0] res,
+	output reg 		    rdy
+);
+	
+	localparam SIZE = 3;
+	localparam [SIZE-1:0] idle   = 3'h0,
+								 init   = 3'h1,
+								 check  = 3'h2,
+								 deca   = 3'h3,
+								 decb   = 3'h4,
+								 storea = 3'h5,
+								 storeb = 3'h6;
+								 
+	reg [SIZE-1:0] state_reg, state_next;
+	reg 				rdy_next;
+	
+	
+	reg  [N-1:0] a_reg,a_next;
+	reg  [N-1:0] b_reg,b_next;
+	reg  [N-1:0] res_next;
+
+	// State register
+	always@(posedge clk, posedge rst) begin
+		if (rst) begin
+			state_reg <= idle;
+			rdy		 <= 1'b0;
+		end
+		else if (ena) begin
+			state_reg <= state_next;
+			rdy		 <= rdy_next;
+		end
+	end
+
+	// Registers
+	always@(posedge clk, posedge rst) begin
+		if (rst) begin
+			a_reg <= {(N){1'b0}};
+			b_reg <= {(N){1'b0}};
+			res	<= {(N){1'b0}};
+			
+		end
+		else if (ena) begin
+			a_reg	<= a_next;
+			b_reg <= b_next;
+			res 	<= res_next;
+		end		
+	end
+	
+	// Next state logic
+	always@(*) 
+		case(state_reg)
+			idle 	 : if (start) state_next = init;
+					   else		  state_next = idle;
+			init 	 : state_next = check;
+			check  : if (a_reg == 0) 
+							state_next = storeb;
+						else if (b_reg == 0) 
+							state_next = storea;
+						else if (a_reg > b_reg)
+							state_next = deca;
+						else
+							state_next = decb;
+			deca 	 : state_next = check;
+			decb 	 : state_next = check;
+			storea : state_next = idle;
+			storeb : state_next = idle;
+			default: state_next = idle;
+		endcase	
+
+	// Microoperation logic
+	always@(*) begin
+		a_next   = a_reg;
+		b_next   = b_reg;
+		res_next	= res;
+		rdy_next	= 1'b0;
+	
+		case(state_reg)
+			init		:	begin
+								a_next 	= dataA;
+								b_next 	= dataB;
+								res_next = {(N){1'b0}};
+							end
+			deca		:	a_next = a_reg - b_reg;
+			decb		:	b_next = b_reg - a_reg;
+			storea	:	begin
+								res_next = a_reg;
+								rdy_next = 1'b1;
+							end
+			storeb	:	begin
+								res_next = b_reg;
+								rdy_next = 1'b1;
+							end								
+			default	: 	;//rdy_next	 = 1'b0;						
+		endcase
+	end
+endmodule
+
